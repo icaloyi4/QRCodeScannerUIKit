@@ -22,7 +22,9 @@ class TransactionController: UIViewController {
         
         tbl_cell.dataSource = self
         tbl_cell.delegate = self
-        tbl_cell.register(TransactionItemLable.self, forCellReuseIdentifier: "cell")
+        tbl_cell.estimatedRowHeight = 100.0 // Adjust Primary table height
+        tbl_cell.rowHeight = UITableView.automaticDimension
+//        tbl_cell.register(TransactionItemLable.self, forCellReuseIdentifier: "cell")
         
         Task {
             await presenter?.loadData()
@@ -87,13 +89,14 @@ extension TransactionController : UITableViewDataSource {
         //                }
         if (indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TransactionItemLable
-            cell.textLabel?.text = "\(self.dataTransaction[indexPath.row].id ?? "")/ \(self.dataTransaction[indexPath.row].merchant ?? "")/\(String(self.dataTransaction[indexPath.row].value ?? 0))"
+            
             cell.textLabel?.font = .systemFont(ofSize: 12)
             
-            //            cell.detailTextLabel?.text = self.dataTransaction[indexPath.row].merchant
-            //            cell.lbl_id?.text = self.dataTransaction[indexPath.row].id
-            //            cell.lbl_merchant?.text = self.dataTransaction[indexPath.row].merchant
-            //            cell.labelAmmount?.text = String(self.dataTransaction[indexPath.row].value ?? 0)
+//                        cell.detailTextLabel?.text = self.dataTransaction[indexPath.row].merchant
+                       cell.lbl_id?.text = self.dataTransaction[indexPath.row].id
+                     cell.lbl_merchant?.text = self.dataTransaction[indexPath.row].merchant
+                      cell.labelAmmount?.text = String(self.dataTransaction[indexPath.row].value ?? 0)
+            
             
             return cell
         }
